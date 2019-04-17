@@ -1,66 +1,101 @@
-import React, { Component } from 'react';
+import React, { useState, useEffect } from 'react';
 
-import { withStyles } from '@material-ui/core/styles';
+import { unstable_useMediaQuery as useMediaQuery } from '@material-ui/core/useMediaQuery';
 
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
-import Button from '@material-ui/core/Button';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 
-import './App.css';
+import MenuItem from '@material-ui/core/MenuItem';
+import FormControl from '@material-ui/core/FormControl';
+import Select from '@material-ui/core/Select';
 
-const styles = theme => ({
-  appBar: {
-    top: 'auto',
-    bottom: 0
-  },
-  toolbar: {
-    alignItems: 'center',
-    justifyContent: 'space-between'
+import StarIcon from '@material-ui/icons/Star';
+import TrendingUpIcon from '@material-ui/icons/TrendingUp';
+import NewReleasesIcon from '@material-ui/icons/NewReleases';
+
+import Posts from './Posts';
+
+import './App.sass';
+
+function App() {
+  const isMobile = useMediaQuery('(max-width:600px)');
+  const [selectValue, setSelectValue] = useState('best');
+  const [tabIdx, setTabIdx] = useState(0);
+  const [posts, setPosts] = useState([]);
+
+  useEffect(() => {
+    // default url (front page of Reddit)
+    let url = 'https://www.reddit.com/hot.json';
+    // If subreddits exist we make a custom url
+    // if (reddit) {
+    //   url = `https://www.reddit.com/r/${reddit}.json`
+    // }
+
+    async function getPosts() {
+      try {
+        const res = await fetch(url);
+        const json = await res.json();
+        const posts = json.data.children.map(child => child.data);
+
+        setPosts(posts);
+      } catch (err) {
+        console.error(err);
+      }
+    }
+
+    getPosts();
+  }, []);
+
+  function handleSelectChange(event) {
+    setSelectValue(event.target.value);
   }
-});
 
-class App extends Component {
-  state = {
-    value: 0
-  };
+  function handleTabChange(event, newValue) {
+    setTabIdx(newValue);
+  }
 
-  handleChange = (event, value) => {
-    this.setState({ value });
-  };
-
-  render() {
-    const { classes } = this.props;
-    const { value } = this.state;
-
-    return (
-      <div className="App">
+  return (
+    <div className="App">
+      {!isMobile ? (
         <AppBar position="static">
-          <Toolbar>
+          <Toolbar className="toolbar">
             <Typography variant="h6">Readit</Typography>
+
+            <FormControl>
+              <Select value={selectValue} onChange={handleSelectChange}>
+                <MenuItem value="best">
+                  <StarIcon className="select-icon" fontSize="small" /> Best
+                </MenuItem>
+                <MenuItem value="hot">
+                  <TrendingUpIcon className="select-icon" fontSize="small" />
+                  Hot
+                </MenuItem>
+                <MenuItem value="new">
+                  <NewReleasesIcon className="select-icon" fontSize="small" />
+                  New
+                </MenuItem>
+              </Select>
+            </FormControl>
           </Toolbar>
         </AppBar>
+      ) : null}
 
-        <Typography component="h2" variant="h1" gutterBottom>
-          Hi there
-        </Typography>
+      <Posts posts={posts} />
 
-        <Button variant="contained" color="primary">
-          Hello World
-        </Button>
-
-        <AppBar position="fixed" color="primary" className={classes.appBar}>
-          <Tabs centered value={value} onChange={this.handleChange}>
-            <Tab label="Top" />
-            <Tab label="Popular" />
-            <Tab label="Hot" />
+      {isMobile ? (
+        <AppBar position="fixed" color="primary" className="app-bar">
+          <Tabs variant="fullWidth" value={tabIdx} onChange={handleTabChange}>
+            <Tab icon={<StarIcon />} label="Best" />
+            <Tab icon={<TrendingUpIcon />} label="Hot" />
+            <Tab icon={<NewReleasesIcon />} label="New" />
           </Tabs>
         </AppBar>
-      </div>
-    );
-  }
+      ) : null}
+    </div>
+  );
 }
 
-export default withStyles(styles)(App);
+export default App;
