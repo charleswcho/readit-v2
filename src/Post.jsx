@@ -6,42 +6,44 @@ import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward';
 
 import './post.sass';
 
-const First = (post, idx) => {
-  // default thumbnail
-  let img = (
-    <div className="thumbnail">
-      <i className="fa fa-book fa-4x" aria-hidden="true" />
-    </div>
-  );
+function Thumbnail({ thumbnail }) {
+  const showThumbnail =
+    thumbnail !== 'self' && thumbnail !== 'default' && thumbnail !== 'nsfw';
 
-  const { thumbnail, ups } = post;
+  return showThumbnail ? (
+    <img className="thumbnail" src={thumbnail} alt="thumbnail" />
+  ) : null;
+}
 
-  // Replace default thumbnail with given thumbnail
-  if (thumbnail !== 'self' && thumbnail !== 'default' && thumbnail !== 'nsfw') {
-    img = <img className="thumbnail" src={thumbnail} alt="thumbnail" />;
-  }
+Metrics.propTypes = {
+  thumbnail: PropTypes.string.isRequired
+};
 
+function Metrics({ thumbnail, ups }) {
   return (
-    <div className="first">
+    <div className="metrics">
       <div className="upvotes">
-        <ArrowUpwardIcon className="select-icon" fontSize="small" />
+        <ArrowUpwardIcon className="upvote-icon" fontSize="small" />
 
         <Typography variant="body1" gutterBottom>
           {ups.toLocaleString()}
         </Typography>
       </div>
-      {img}
+
+      <Thumbnail thumbnail={thumbnail} />
     </div>
   );
+}
+
+Metrics.propTypes = {
+  post: PropTypes.object.isRequired
 };
 
-const Second = post => {
-  const { url, title, author, subreddit } = post;
-
+function Content({ url, title, author, subreddit }) {
   return (
-    <div className="second">
+    <div className="content">
       <div className="title">
-        <a href={url}>
+        <a href={url} target="_blank" rel="noopener noreferrer">
           <Typography variant="body2" gutterBottom>
             {title}
           </Typography>
@@ -51,28 +53,46 @@ const Second = post => {
         <div className="author">
           <Typography variant="caption" gutterBottom>
             by
-            <a href={`https://www.reddit.com/user/${author}`}> {author}</a>
+            <a
+              href={`https://www.reddit.com/user/${author}`}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              {' '}
+              {author}
+            </a>
           </Typography>
         </div>
         <div className="subreddit">
           <Typography variant="caption" gutterBottom>
             to
-            <a href={`https://www.reddit.com/r/${subreddit}`}> {subreddit}</a>
+            <a
+              href={`https://www.reddit.com/r/${subreddit}`}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              {' '}
+              {subreddit}
+            </a>
           </Typography>
         </div>
       </div>
     </div>
   );
+}
+
+Content.propTypes = {
+  post: PropTypes.object.isRequired
 };
 
-const Post = (post, idx) => {
+function Post(post, idx) {
   return (
     <li key={idx} className="post">
-      {First(post, idx)}
-      {Second(post)}
+      {Metrics(post, idx)}
+      {Content(post)}
     </li>
   );
-};
+}
 
 Post.propTypes = {
   post: PropTypes.object.isRequired,
