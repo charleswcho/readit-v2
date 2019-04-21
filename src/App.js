@@ -24,6 +24,7 @@ function App() {
   const isMobile = useMediaQuery('(max-width:600px)');
   const [selectValue, setSelectValue] = useState('best');
   const [tabValue, setTabValue] = useState('best');
+  const [postsLoading, setPostsLoading] = useState(true);
   const [posts, setPosts] = useState([]);
 
   useEffect(() => {
@@ -41,13 +42,16 @@ function App() {
     console.log(url);
 
     try {
+      setPostsLoading(true);
       const res = await fetch(url);
       const json = await res.json();
       const posts = json.data.children.map(child => child.data);
 
       setPosts(posts);
+      setPostsLoading(false);
     } catch (err) {
       console.error(err);
+      setPostsLoading(false);
     }
   }
 
@@ -89,7 +93,7 @@ function App() {
         </AppBar>
       ) : null}
 
-      <Posts posts={posts} />
+      <Posts posts={posts} loading={postsLoading} />
 
       {isMobile ? (
         <AppBar position="fixed" color="primary" className="app-bar">
