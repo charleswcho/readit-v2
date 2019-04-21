@@ -23,39 +23,45 @@ import './App.sass';
 function App() {
   const isMobile = useMediaQuery('(max-width:600px)');
   const [selectValue, setSelectValue] = useState('best');
-  const [tabIdx, setTabIdx] = useState(0);
+  const [tabValue, setTabValue] = useState('best');
   const [posts, setPosts] = useState([]);
 
   useEffect(() => {
     // default url (front page of Reddit)
-    let url = 'https://www.reddit.com/hot.json';
+    let url = 'https://www.reddit.com/best.json';
     // If subreddits exist we make a custom url
     // if (reddit) {
     //   url = `https://www.reddit.com/r/${reddit}.json`
     // }
 
-    async function getPosts() {
-      try {
-        const res = await fetch(url);
-        const json = await res.json();
-        const posts = json.data.children.map(child => child.data);
-
-        setPosts(posts);
-      } catch (err) {
-        console.error(err);
-      }
-    }
-
-    getPosts();
+    getPosts(url);
   }, []);
 
-  function handleSelectChange(event) {
-    setSelectValue(event.target.value);
+  async function getPosts(url) {
+    console.log(url);
+
+    try {
+      const res = await fetch(url);
+      const json = await res.json();
+      const posts = json.data.children.map(child => child.data);
+
+      setPosts(posts);
+    } catch (err) {
+      console.error(err);
+    }
   }
 
-  function handleTabChange(event, newValue) {
-    setTabIdx(newValue);
-  }
+  const handleSelectChange = event => {
+    setSelectValue(event.target.value);
+
+    getPosts(`https://www.reddit.com/${event.target.value}.json`);
+  };
+
+  const handleTabChange = (_, newValue) => {
+    setTabValue(newValue);
+
+    getPosts(`https://www.reddit.com/${newValue}.json`);
+  };
 
   return (
     <div className="App">
@@ -87,10 +93,10 @@ function App() {
 
       {isMobile ? (
         <AppBar position="fixed" color="primary" className="app-bar">
-          <Tabs variant="fullWidth" value={tabIdx} onChange={handleTabChange}>
-            <Tab icon={<StarIcon />} label="Best" />
-            <Tab icon={<TrendingUpIcon />} label="Hot" />
-            <Tab icon={<NewReleasesIcon />} label="New" />
+          <Tabs variant="fullWidth" value={tabValue} onChange={handleTabChange}>
+            <Tab value="best" icon={<StarIcon />} label="Best" />
+            <Tab value="hot" icon={<TrendingUpIcon />} label="Hot" />
+            <Tab value="new" icon={<NewReleasesIcon />} label="New" />
           </Tabs>
         </AppBar>
       ) : null}
