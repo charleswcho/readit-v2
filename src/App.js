@@ -26,7 +26,7 @@ function App() {
   const isMobile = useMediaQuery('(max-width: 600px)');
   const [selectValue, setSelectValue] = useState('best');
   const [tabValue, setTabValue] = useState('best');
-  const { data, loading, error, getData } = useDataApi(
+  const [data, loading, error, getData] = useDataApi(
     'https://www.reddit.com/best.json',
     { children: [] }
   );

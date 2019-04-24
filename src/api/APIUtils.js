@@ -25,11 +25,7 @@ const useDataApi = (initialUrl, initialData) => {
     })();
   }, [url]);
 
-  const getData = url => {
-    setUrl(url);
-  };
-
-  return { data, loading, error, getData };
+  return [data, loading, error, setUrl];
 };
 
 useDataApi.propTypes = {
