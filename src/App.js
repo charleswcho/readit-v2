@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 
 import { unstable_useMediaQuery as useMediaQuery } from '@material-ui/core/useMediaQuery';
 
@@ -18,58 +18,47 @@ import NewReleasesIcon from '@material-ui/icons/NewReleases';
 
 import Posts from './components/Posts';
 
+import useDataApi from './api/APIUtils';
+
 import './App.sass';
 
 function App() {
   const isMobile = useMediaQuery('(max-width: 600px)');
   const [selectValue, setSelectValue] = useState('best');
   const [tabValue, setTabValue] = useState('best');
-  const [postsLoading, setPostsLoading] = useState(true);
-  const [posts, setPosts] = useState([]);
+  const { data, loading, error, getData } = useDataApi(
+    'https://www.reddit.com/best.json',
+    { children: [] }
+  );
 
-  useEffect(() => {
-    // default url (front page of Reddit)
-    let url = 'https://www.reddit.com/best.json';
-    // If subreddits exist we make a custom url
-    // if (reddit) {
-    //   url = `https://www.reddit.com/r/${reddit}.json`
-    // }
+  // default url (front page of Reddit)
+  // let url = 'https://www.reddit.com/best.json';
+  // If subreddits exist we make a custom url
+  // if (reddit) {
+  //   url = `https://www.reddit.com/r/${reddit}.json`
+  // }
 
-    getPosts(url);
-  }, []);
+  const posts = data.children.map(child => child.data);
 
-  async function getPosts(url) {
-    console.log(url);
-
-    try {
-      setPostsLoading(true);
-      const res = await fetch(url);
-      const json = await res.json();
-      const posts = json.data.children.map(child => child.data);
-
-      setPosts(posts);
-      setPostsLoading(false);
-    } catch (err) {
-      console.error(err);
-      setPostsLoading(false);
-    }
+  if (error) {
+    console.error(error);
   }
 
   const handleSelectChange = event => {
     setSelectValue(event.target.value);
 
-    getPosts(`https://www.reddit.com/${event.target.value}.json`);
+    getData(`https://www.reddit.com/${event.target.value}.json`);
   };
 
   const handleTabChange = (_, newValue) => {
     setTabValue(newValue);
 
-    getPosts(`https://www.reddit.com/${newValue}.json`);
+    getData(`https://www.reddit.com/${newValue}.json`);
   };
 
   return (
     <div className="App">
-      {!isMobile ? (
+      {!isMobile && (
         <AppBar position="static">
           <Toolbar className="toolbar">
             <Typography variant="h6">Readit</Typography>
@@ -91,11 +80,11 @@ function App() {
             </FormControl>
           </Toolbar>
         </AppBar>
-      ) : null}
+      )}
 
-      <Posts posts={posts} loading={postsLoading} />
+      <Posts posts={posts} loading={loading} />
 
-      {isMobile ? (
+      {isMobile && (
         <AppBar position="fixed" color="primary" className="app-bar">
           <Tabs variant="fullWidth" value={tabValue} onChange={handleTabChange}>
             <Tab value="best" icon={<StarIcon />} label="Best" />
@@ -103,7 +92,7 @@ function App() {
             <Tab value="new" icon={<NewReleasesIcon />} label="New" />
           </Tabs>
         </AppBar>
-      ) : null}
+      )}
     </div>
   );
 }
