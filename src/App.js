@@ -16,12 +16,12 @@ import StarIcon from '@material-ui/icons/Star';
 import TrendingUpIcon from '@material-ui/icons/TrendingUp';
 import NewReleasesIcon from '@material-ui/icons/NewReleases';
 
-import Posts from './Posts';
+import Posts from './components/Posts';
 
 import './App.sass';
 
 function App() {
-  const isMobile = useMediaQuery('(max-width:600px)');
+  const isMobile = useMediaQuery('(max-width: 600px)');
   const [selectValue, setSelectValue] = useState('best');
   const [tabValue, setTabValue] = useState('best');
   const [postsLoading, setPostsLoading] = useState(true);
