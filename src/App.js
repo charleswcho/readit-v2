@@ -18,18 +18,18 @@ import NewReleasesIcon from '@material-ui/icons/NewReleases';
 
 import Posts from './components/Posts';
 
-import useDataApi from './api/APIUtils';
+import useDataApi from './utils/useDataApi';
 
 import './App.sass';
 
 function App() {
   const isMobile = useMediaQuery('(max-width: 600px)');
-  const [selectValue, setSelectValue] = useState('best');
-  const [tabValue, setTabValue] = useState('best');
-  const [data, loading, error, getData] = useDataApi(
+  const [filter, setFilter] = useState('best');
+  const [data, loading, , getData] = useDataApi(
     'https://www.reddit.com/best.json',
     { children: [] }
   );
+  const [count, setCount] = useState(25);
 
   // default url (front page of Reddit)
   // let url = 'https://www.reddit.com/best.json';
@@ -40,20 +40,31 @@ function App() {
 
   const posts = data.children.map(child => child.data);
 
-  if (error) {
-    console.error(error);
-  }
-
   const handleSelectChange = event => {
-    setSelectValue(event.target.value);
+    setFilter(event.target.value);
 
     getData(`https://www.reddit.com/${event.target.value}.json`);
+    setCount(25);
   };
 
   const handleTabChange = (_, newValue) => {
-    setTabValue(newValue);
+    setFilter(newValue);
 
     getData(`https://www.reddit.com/${newValue}.json`);
+    setCount(25);
+  };
+
+  const handleScrollBottom = () => {
+    console.log('Scrolled bottom');
+
+    const before = data.before ? `&before${data.before}` : '';
+
+    getData(
+      `https://www.reddit.com/hot.json?after=${
+        data.after
+      }${before}&count=${count}`
+    );
+    setCount(count + 25);
   };
 
   return (
@@ -61,10 +72,12 @@ function App() {
       {!isMobile && (
         <AppBar position="static">
           <Toolbar className="toolbar">
-            <Typography variant="h6">Readit</Typography>
+            <a href="/">
+              <Typography variant="h6">Readit</Typography>
+            </a>
 
             <FormControl>
-              <Select value={selectValue} onChange={handleSelectChange}>
+              <Select value={filter} onChange={handleSelectChange}>
                 <MenuItem value="best">
                   <StarIcon className="select-icon" fontSize="small" /> Best
                 </MenuItem>
@@ -82,11 +95,15 @@ function App() {
         </AppBar>
       )}
 
-      <Posts posts={posts} loading={loading} />
+      <Posts
+        posts={posts}
+        loading={loading}
+        handleScrollBottom={handleScrollBottom}
+      />
 
       {isMobile && (
         <AppBar position="fixed" color="primary" className="app-bar">
-          <Tabs variant="fullWidth" value={tabValue} onChange={handleTabChange}>
+          <Tabs variant="fullWidth" value={filter} onChange={handleTabChange}>
             <Tab value="best" icon={<StarIcon />} label="Best" />
             <Tab value="hot" icon={<TrendingUpIcon />} label="Hot" />
             <Tab value="new" icon={<NewReleasesIcon />} label="New" />

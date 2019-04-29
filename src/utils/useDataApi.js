@@ -9,8 +9,8 @@ const useDataApi = (initialUrl, initialData) => {
 
   useEffect(() => {
     (async () => {
-      setError(false);
       setLoading(true);
+      setError(false);
 
       try {
         const res = await fetch(url);

@@ -7,13 +7,21 @@ import Post from './Post';
 
 import './posts.sass';
 
-function Posts({ posts, loading }) {
+function Posts({ posts, loading, handleScrollBottom }) {
+  function handleScrollEvent({ target }) {
+    if (target.scrollHeight - target.scrollTop === target.clientHeight) {
+      handleScrollBottom();
+    }
+  }
+
   return loading ? (
     <div className="loading-page">
       <CircularProgress />
     </div>
   ) : (
-    <ul className="posts">{posts.map((post, idx) => Post(post, idx))}</ul>
+    <ul className="posts" onScroll={handleScrollEvent}>
+      {posts.map((post, idx) => Post(post, idx))}
+    </ul>
   );
 }
 
