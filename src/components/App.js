@@ -30,14 +30,6 @@ function App() {
     { children: [] }
   );
   const [count, setCount] = useState(25);
-
-  // default url (front page of Reddit)
-  // let url = 'https://www.reddit.com/best.json';
-  // If subreddits exist we make a custom url
-  // if (reddit) {
-  //   url = `https://www.reddit.com/r/${reddit}.json`
-  // }
-
   const posts = data.children.map(child => child.data);
 
   const handleSelectChange = event => {
@@ -55,8 +47,6 @@ function App() {
   };
 
   const handleScrollBottom = () => {
-    console.log('Scrolled bottom');
-
     const before = data.before ? `&before${data.before}` : '';
 
     getData(

@@ -1,6 +1,7 @@
 {
   "name": "readit",
   "version": "0.1.0",
+  "homepage": "https://charleswcho.github.io/readit-v2",
   "private": true,
   "dependencies": {
     "@material-ui/core": "^3.9.3",
@@ -14,7 +15,9 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -29,6 +32,7 @@
     "eslint-config-airbnb": "^17.1.0",
     "eslint-plugin-import": "^2.17.2",
     "eslint-plugin-jsx-a11y": "^6.2.1",
-    "eslint-plugin-react": "^7.12.4"
+    "eslint-plugin-react": "^7.12.4",
+    "gh-pages": "^2.0.1"
   }
 }
