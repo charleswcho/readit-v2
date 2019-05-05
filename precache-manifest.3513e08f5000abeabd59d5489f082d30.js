@@ -1,11 +1,11 @@
 self.__precacheManifest = [
   {
-    "revision": "69ddc4263b73078a72e8",
+    "revision": "3ef52a34dd930ac6d515",
     "url": "/readit-v2/static/css/main.96d5413e.chunk.css"
   },
   {
-    "revision": "69ddc4263b73078a72e8",
-    "url": "/readit-v2/static/js/main.fc04dec6.chunk.js"
+    "revision": "3ef52a34dd930ac6d515",
+    "url": "/readit-v2/static/js/main.a9fba3ea.chunk.js"
   },
   {
     "revision": "2fe4e2fe8ddae74cb414",
@@ -16,7 +16,7 @@ self.__precacheManifest = [
     "url": "/readit-v2/static/js/2.e9c86f8a.chunk.js"
   },
   {
-    "revision": "da834345ee72e20519d5a4806b92ac7a",
+    "revision": "4c1d9be7d37bcca590da42961038aebc",
     "url": "/readit-v2/index.html"
   }
 ];
