@@ -5,7 +5,7 @@ import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 
 import './index.sass';
-import App from './App';
+import App from './components/App';
 import * as serviceWorker from './serviceWorker';
 
 const theme = createMuiTheme({

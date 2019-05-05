@@ -3,9 +3,9 @@ import PropTypes from 'prop-types';
 
 import CircularProgress from '@material-ui/core/CircularProgress';
 
-import Post from './Post';
+import Post from '../Post/Post';
 
-import './posts.sass';
+import './Posts.sass';
 
 function Posts({ posts, loading, handleScrollBottom }) {
   function handleScrollEvent({ target }) {

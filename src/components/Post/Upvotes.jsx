@@ -5,7 +5,7 @@ import Typography from '@material-ui/core/Typography';
 
 import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward';
 
-import './upvotes.sass';
+import './Upvotes.sass';
 
 function Upvotes({ ups, isMobile }) {
   const iconFontSize = isMobile ? 'inherit' : 'small';

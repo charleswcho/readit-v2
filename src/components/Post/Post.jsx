@@ -6,7 +6,7 @@ import Typography from '@material-ui/core/Typography';
 
 import Upvotes from './Upvotes';
 
-import './post.sass';
+import './Post.sass';
 
 function Post(
   { thumbnail, ups, permalink, url, title, author, subreddit },

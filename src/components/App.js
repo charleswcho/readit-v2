@@ -16,9 +16,9 @@ import StarIcon from '@material-ui/icons/Star';
 import TrendingUpIcon from '@material-ui/icons/TrendingUp';
 import NewReleasesIcon from '@material-ui/icons/NewReleases';
 
-import Posts from './components/Posts';
+import Posts from './Posts/Posts';
 
-import useDataApi from './utils/useDataApi';
+import useDataApi from '../utils/useDataApi';
 
 import './App.sass';
 
