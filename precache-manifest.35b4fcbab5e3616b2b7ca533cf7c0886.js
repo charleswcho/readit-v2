@@ -16,7 +16,7 @@ self.__precacheManifest = [
     "url": "/readit-v2/static/js/2.e9c86f8a.chunk.js"
   },
   {
-    "revision": "4c1d9be7d37bcca590da42961038aebc",
+    "revision": "ddab9870acaf7da26c44e003bafb6bd0",
     "url": "/readit-v2/index.html"
   }
 ];
