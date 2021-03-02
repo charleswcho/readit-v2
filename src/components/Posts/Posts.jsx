@@ -7,12 +7,12 @@ import Post from '../Post/Post';
 
 import './Posts.sass';
 
-function Posts({ posts, loading, handleScrollBottom }) {
-  function handleScrollEvent({ target }) {
+const Posts = ({ posts, loading, handleScrollBottom }) => {
+  const handleScrollEvent = ({ target }) => {
     if (target.scrollHeight - target.scrollTop === target.clientHeight) {
       handleScrollBottom();
     }
-  }
+  };
 
   return loading ? (
     <div className="loading-page">
@@ -25,7 +25,7 @@ function Posts({ posts, loading, handleScrollBottom }) {
       ))}
     </ul>
   );
-}
+};
 
 Posts.propTypes = {
   posts: PropTypes.arrayOf(

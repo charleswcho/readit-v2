@@ -73,7 +73,7 @@ const Post = ({ post, idx }) => {
 Post.propTypes = {
   post: PropTypes.shape({
     thumbnail: PropTypes.string.isRequired,
-    ups: PropTypes.string.isRequired,
+    ups: PropTypes.number.isRequired,
     permalink: PropTypes.string.isRequired,
     url: PropTypes.string.isRequired,
     title: PropTypes.string.isRequired,

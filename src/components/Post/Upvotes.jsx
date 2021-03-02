@@ -7,7 +7,7 @@ import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward';
 
 import './Upvotes.sass';
 
-function Upvotes({ ups, isMobile }) {
+const Upvotes = ({ ups, isMobile }) => {
   const iconFontSize = isMobile ? 'inherit' : 'small';
   const fontSize = isMobile ? 'caption' : 'body1';
 
@@ -20,7 +20,7 @@ function Upvotes({ ups, isMobile }) {
       </Typography>
     </div>
   );
-}
+};
 
 Upvotes.propTypes = {
   ups: PropTypes.number.isRequired,
