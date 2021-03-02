@@ -17,8 +17,8 @@ const useDataApi = (initialUrl, initialData) => {
         const json = await res.json();
 
         setData(json.data);
-      } catch (error) {
-        setError(error);
+      } catch (err) {
+        setError(err);
       }
 
       setLoading(false);
@@ -30,7 +30,7 @@ const useDataApi = (initialUrl, initialData) => {
 
 useDataApi.propTypes = {
   initialUrl: PropTypes.string.isRequired,
-  initialData: PropTypes.object.isRequired
+  initialData: PropTypes.shape.isRequired,
 };
 
 export default useDataApi;

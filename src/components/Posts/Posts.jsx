@@ -20,14 +20,27 @@ function Posts({ posts, loading, handleScrollBottom }) {
     </div>
   ) : (
     <ul className="posts" onScroll={handleScrollEvent}>
-      {posts.map((post, idx) => Post(post, idx))}
+      {posts.map((post, idx) => (
+        <Post post={post} idx={idx} />
+      ))}
     </ul>
   );
 }
 
 Posts.propTypes = {
-  posts: PropTypes.array.isRequired,
-  loading: PropTypes.bool.isRequired
+  posts: PropTypes.arrayOf(
+    PropTypes.shape({
+      thumbnail: PropTypes.string.isRequired,
+      ups: PropTypes.number.isRequired,
+      permalink: PropTypes.string.isRequired,
+      url: PropTypes.string.isRequired,
+      title: PropTypes.string.isRequired,
+      author: PropTypes.string.isRequired,
+      subreddit: PropTypes.string.isRequired,
+    }),
+  ).isRequired,
+  loading: PropTypes.bool.isRequired,
+  handleScrollBottom: PropTypes.func.isRequired,
 };
 
 export default Posts;

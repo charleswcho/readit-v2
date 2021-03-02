@@ -25,14 +25,13 @@ import './App.sass';
 function App() {
   const isMobile = useMediaQuery('(max-width: 600px)');
   const [filter, setFilter] = useState('best');
-  const [data, loading, , getData] = useDataApi(
-    'https://www.reddit.com/best.json',
-    { children: [] }
-  );
+  const [data, loading, , getData] = useDataApi('https://www.reddit.com/best.json', {
+    children: [],
+  });
   const [count, setCount] = useState(25);
-  const posts = data.children.map(child => child.data);
+  const posts = data.children.map((child) => child.data);
 
-  const handleSelectChange = event => {
+  const handleSelectChange = (event) => {
     setFilter(event.target.value);
 
     getData(`https://www.reddit.com/${event.target.value}.json`);
@@ -49,11 +48,7 @@ function App() {
   const handleScrollBottom = () => {
     const before = data.before ? `&before${data.before}` : '';
 
-    getData(
-      `https://www.reddit.com/hot.json?after=${
-        data.after
-      }${before}&count=${count}`
-    );
+    getData(`https://www.reddit.com/hot.json?after=${data.after}${before}&count=${count}`);
     setCount(count + 25);
   };
 
@@ -85,11 +80,7 @@ function App() {
         </AppBar>
       )}
 
-      <Posts
-        posts={posts}
-        loading={loading}
-        handleScrollBottom={handleScrollBottom}
-      />
+      <Posts posts={posts} loading={loading} handleScrollBottom={handleScrollBottom} />
 
       {isMobile && (
         <AppBar position="fixed" color="primary" className="app-bar">

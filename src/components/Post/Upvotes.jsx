@@ -24,7 +24,7 @@ function Upvotes({ ups, isMobile }) {
 
 Upvotes.propTypes = {
   ups: PropTypes.number.isRequired,
-  isMobile: PropTypes.bool.isRequired
+  isMobile: PropTypes.bool.isRequired,
 };
 
 export default Upvotes;

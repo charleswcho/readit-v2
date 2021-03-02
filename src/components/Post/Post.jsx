@@ -8,14 +8,10 @@ import Upvotes from './Upvotes';
 
 import './Post.sass';
 
-function Post(
-  { thumbnail, ups, permalink, url, title, author, subreddit },
-  idx
-) {
+const Post = ({ post, idx }) => {
+  const { thumbnail, ups, permalink, url, title, author, subreddit } = post;
   const isMobile = useMediaQuery('(max-width:600px)');
-  const showThumbnail = thumbnail.match(
-    /(http(s?):)([/|.|\w|\s|-])*\.(?:jpg|gif|png)/g
-  );
+  const showThumbnail = thumbnail.match(/(http(s?):)([/|.|\w|\s|-])*\.(?:jpg|gif|png)/g);
 
   return (
     <li key={idx} className="post">
@@ -31,11 +27,7 @@ function Post(
 
       <div className="content">
         <div className="title">
-          <a
-            href={`https://www.reddit.com${permalink}`}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
+          <a href={`https://www.reddit.com${permalink}`} target="_blank" rel="noopener noreferrer">
             <Typography variant="body2" gutterBottom>
               {title}
             </Typography>
@@ -76,11 +68,19 @@ function Post(
       </div>
     </li>
   );
-}
+};
 
 Post.propTypes = {
-  post: PropTypes.object.isRequired,
-  idx: PropTypes.number.isRequired
+  post: PropTypes.shape({
+    thumbnail: PropTypes.string.isRequired,
+    ups: PropTypes.string.isRequired,
+    permalink: PropTypes.string.isRequired,
+    url: PropTypes.string.isRequired,
+    title: PropTypes.string.isRequired,
+    author: PropTypes.string.isRequired,
+    subreddit: PropTypes.string.isRequired,
+  }).isRequired,
+  idx: PropTypes.number.isRequired,
 };
 
 export default Post;
