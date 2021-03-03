@@ -8,8 +8,8 @@
     "@material-ui/icons": "^3.0.2",
     "node-sass": "^5.0.0",
     "prop-types": "^15.7.2",
-    "react": "^16.8.6",
-    "react-dom": "^16.8.6",
+    "react": "^16.9.0",
+    "react-dom": "^16.9.0",
     "react-scripts": "4.0.3"
   },
   "scripts": {
@@ -30,7 +30,10 @@
     "not op_mini all"
   ],
   "devDependencies": {
+    "@testing-library/jest-dom": "^5.11.9",
+    "@testing-library/react": "^11.2.5",
     "babel-eslint": "^10.1.0",
+    "css-mediaquery": "^0.1.2",
     "eslint": "^7.21.0",
     "eslint-config-airbnb": "^18.2.1",
     "eslint-config-prettier": "8.1.0",

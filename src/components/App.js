@@ -46,7 +46,7 @@ function App() {
   };
 
   const handleScrollBottom = () => {
-    const before = data.before ? `&before${data.before}` : '';
+    const before = data.before ? `&before=${data.before}` : '';
 
     getData(`https://www.reddit.com/hot.json?after=${data.after}${before}&count=${count}`);
     setCount(count + 25);
